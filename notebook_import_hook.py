@@ -5,7 +5,6 @@ from IPython.core.interactiveshell import InteractiveShell
 
 #! globally available string of the path of the top level
 top_dir = __file__[:__file__.rindex('/') + 1]
-big_data = '/big/data/'
 
 #!-- helpers
 def find_notebook(fullname, path=None):
