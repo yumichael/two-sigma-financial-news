@@ -2,9 +2,10 @@ import io, os, sys, types
 from IPython import get_ipython
 from nbformat import read
 from IPython.core.interactiveshell import InteractiveShell
+from pathlib import Path
 
 #! globally available string of the path of the top level
-top_dir = __file__[:__file__.rindex('/') + 1]
+top_dir = Path(__file__).parent
 
 #!-- helpers
 def find_notebook(fullname, path=None):

@@ -16,7 +16,7 @@ from notebook_import_hook import top_dir
 # and manually remove the local subdirectory path from the sys.path in order to enforce using absolute file names.
 '''
 
-the_data = top_dir+'data/'
+the_data = top_dir/'data/'
 big_data = '/big/data/'
 
 from globals import *
