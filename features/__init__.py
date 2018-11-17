@@ -1,1 +1,1 @@
-from features.features import FFF, fffList, feats, gen_features
+from features.features import FFF, fffTemplate, fffEdit, feats as FLIST, gen_features
