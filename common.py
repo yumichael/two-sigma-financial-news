@@ -15,9 +15,9 @@ from notebook_import_hook import top_dir
 # So a TODO is to figure out when I'm importing this module from a Jupyter notebook in a subdirectory
 # and manually remove the local subdirectory path from the sys.path in order to enforce using absolute file names.
 '''
-
+from pathlib import Path
 the_data = top_dir/'data/'
-big_data = '/big/data/'
+big_data = Path('/big/data/')
 
 from globals import *
 from helper import *
