@@ -1,6 +1,6 @@
 from common import *
 
-fffTemplate = '''
+soloTemplate = '''
     <>~Market & (
         <>Return{.&pure&~digit&~TEN} & ~Since & Return{.& =.5
             <>(oo?.6|cc?.6|aoo?.3|acc?.3|doo?.3|dcc?.3|doc?.3|daoc?.3|vp1dd?.5)
@@ -68,7 +68,7 @@ fffTemplate = '''
         Time{long?.9 | short?.5}
 '''
 
-class fffEdit(metaclass=staticclass):
+class soloEdit(metaclass=staticclass):
     def long(y, *, e):
         care = [21, 62, 125, 250]
         ssets = [[21],[62],[125],[250],[21,62],[125,250],[62,250],[21,125],[21,250],[21,125,250],[21,62,250],[21,62,125,250]]
