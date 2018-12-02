@@ -70,7 +70,7 @@ copyTemplate = '''
 
 class copyEdit(metaclass=staticclass):
     def _item_(x):
-        return max(x * .7, x - .15)
+        return x*.9
     
     def long(y, *, e):
         care = [21, 62, 125, 250]
@@ -148,7 +148,7 @@ diffTemplate = '''
 
 class diffEdit(metaclass=staticclass):
     def _item_(x):
-        return max(x * .7, x - .15)
+        return x*.96
     
     def long(y, *, e):
         care = [21, 62, 125, 250]
@@ -168,8 +168,9 @@ class diffEdit(metaclass=staticclass):
     def three():
         return .42 - __class__._random_data[2]
     
-corrTemplate = '''0|
-    <>Corr & Corr{ =.95
+corrTemplate = '''
+    <>0
+    | Corr & Corr{ =.95
         <>[10?.5,21?.7,62?.6,250?.7]
         & ay[1?.7,10?.6,20?.5]
       }
