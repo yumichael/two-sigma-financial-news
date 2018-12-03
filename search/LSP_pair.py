@@ -25,8 +25,8 @@ class LSP(O()):
             lim = 0
         enc = {#TODO implement 1 sided search e.g. len(a)==2
             0: {
-                'min_data_in_leaf': O(a=[1,60,375], cast=round, lim=lambda lim: lim+1),
-                'min_sum_hessian_in_leaf': O(a=[0,50,450], lim=lambda lim: lim+2),
+                'min_data_in_leaf': O(a=[1,60,375], b=120, cast=round, lim=lambda lim: lim),
+                'min_sum_hessian_in_leaf': O(a=[0,50,450], lim=lambda lim: lim+1),
                 'lambda_l1': O(a=[0,.02,.2], b=0),
                 'lambda_l2': O(a=[0,.02,.2], b=0),
             }
