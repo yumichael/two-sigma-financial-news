@@ -174,6 +174,7 @@ corrTemplate = '''
         <>[10?.5,21?.7,62?.6,250?.7]
         & ay[1?.7,10?.6,20?.5]
       }
+    | Corr{Uni} =.16
 '''
 
 class corrEdit(metaclass=staticclass):
