@@ -1,3 +1,5 @@
+import numpy as np
+
 class KaggleMetric():
     def __init__(self, incr=0):
         self.incr = incr
@@ -30,3 +32,12 @@ class KaggleMetric():
 
         valid_data.i += self.incr
         return 'kaggle', score+valid_data.i, True
+    
+    @staticmethod
+    def func(bst, F, P, weight):
+        guess = bst.predict(F)*2-1
+        guess = guess*(np.abs(guess)>=0.0)
+        P['trade'] = guess*P.upDown*P[weight]
+        daily = P.groupby('time').trade.sum()
+        del P['trade']
+        return daily.mean()/daily.std(ddof=0)
