@@ -444,3 +444,38 @@ class TP(O()):
       }
     | Corr{Uni}
     '''
+    
+    SimplePair = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc)
+            & index[0,1,2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [5:,10:,15:,10:5,15:10,20:15,15:5,20:10,20:5]
+          }
+      )
+    |
+        <>AssetEnc{InUni}
+#<>#
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc)
+            & index[0,1,2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [5:,10:,15:,10:5,15:10,20:15,15:5,20:10,20:5]
+          }
+      )
+    |
+        <>AssetEnc{InUni}
+#<># 0 #<>#
+    <>0
+    | Corr & Corr{
+        <>[21,62,125,250]
+        & ay[1,10]
+      }
+    | Corr{Uni}
+    '''
