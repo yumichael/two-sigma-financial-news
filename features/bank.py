@@ -245,6 +245,55 @@ class TP(O()):
         Time{long | short}
     '''
     
+    SearchedPair = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|doo|doc)
+            & index[0,1,2, 0:1,1:2,0:2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|doo|vp5dd|Volatility)
+            & [5:,15:,10:5,20:10,20:5]
+          }
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:])}
+            & (
+                | Drawdown[1:]
+                | Since{Max&index[0]}
+                | Drawup[1:,10:]
+                | Since{Min&index[0,10]}
+              )
+            & Since[21:, 62:, 125:, 250:]
+          )
+        | (
+            <> Volatility[20:]
+            | Volatility[ 20:]
+            & (
+                <>Drawdown[20:10]
+                | Since{Max & index[10]}
+                | Since{Min & index[5,10]}
+              )
+            & Since[21:, 62:, 125:, 250:]
+          )
+      )
+#<>#
+    <>~Market & (
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo|vp5dd)
+            & [5:,20:10,20:5]
+          }
+      )
+#<>#
+0
+#<>#
+    <>0
+    | Corr & Corr{
+        <>[10,21,250]
+        & ay[1]
+      }
+    | Corr{Uni}
+    '''
+    
     TryPair = '''
     <>~Market & (
         <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
