@@ -25,7 +25,7 @@ class TP(O()):
                 | Drawup[1:, 5:,10:,20:, 10:5,20:10]
                 | Since{Min&index[0,5,10,20]}
               )
-            & Since[21:, 62:, 125:, 250:]
+            & Since[21:,62:,125:,250:]
           )
         | (
             <>Return{dd} & VP[1:, 5:, 10:]
@@ -36,23 +36,23 @@ class TP(O()):
                 | Drawup[1, 5:,10:,20:, 10:5,20:10]
                 | Since{Min & index[0,5,10,20]}
               )
-            & Since[21:, 62:, 125:, 250:]
+            & Since[21:,62:,125:,250:]
           )
         | (
-            <> Volatility[20:, 60:]
-            | Volatility[10:, 20:]
+            <> Volatility[20:,60:]
+            | Volatility[10:,20:]
             & (
                 <>Drawdown[1:, 5:,10:,20:, 10:5,20:10]
                 | Since{Max & index[0,5,10,20]}
                 | Drawup[1:, 5:,10:,20:, 10:5,20:10]
                 | Since{Min & index[0,5,10,20]}
               )
-            & Since[21:, 62:, 125:, 250:]
+            & Since[21:,62:,125:,250:]
           )
       )
     | Market{.&
-        <>(~Weight | Weight)
-        & (Return | VP | Volatility)
+        <>(~Weight|Weight)
+        & (Return|VP|Volatility)
         & [1:,5:,10:,20:,60:]
       }
     |
@@ -64,9 +64,9 @@ class TP(O()):
     |
         <>FaceValue{Volume | Open | Close}
         | Return{mix[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19]}
-        | Return{rr | af | it}
+        | Return{rr|af|it}
     |
-        Time{long | short}
+        Time{long|short}
     '''
     
     InitKaggleGo = '''
@@ -87,7 +87,7 @@ class TP(O()):
                 | Since{Max&index[0]}
                 | Since{Min&index[0,10]}
               )
-            & Since[21:, 62:, 125:, 250:]
+            & Since[21:,62:,125:,250:]
           )
       )
     |
@@ -96,7 +96,7 @@ class TP(O()):
     |
         <>FaceValue{Volume}
         | Return{mix[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19]}
-        | Return{rr | af | it}
+        | Return{rr|af|it}
     '''
     
     TryIt = '''
@@ -116,7 +116,7 @@ class TP(O()):
                 | Drawdown[5:,10:,20:, 10:5,20:10]
                 | Since{Min&index[0]}
               )
-            & Since[21:, 125:, 250:]
+            & Since[21:,125:,250:]
           )
         | (
             <> Volatility[60:]
@@ -126,12 +126,119 @@ class TP(O()):
                 | Since{Max & index[0,20]}
                 | Drawup[1:, 20:10]
               )
-            & Since[21:, 125:, 250:]
+            & Since[21:,125:,250:]
           )
       )
     |
         <>Return{pure&~dd} & VP[10:,20:]
         | FracRec[21:,125:,250:]
+    |
+        <>AssetEnc{InUni}
+    |
+        Time{long | short}
+    '''
+    
+    TryItVP5 = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|aoo|doo|doc|daoc|vp1dd)
+            & index[0,1,2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo|vp5dd)
+            & [5:,10:,15:,10:5,15:10,20:15,15:5,20:10,20:5]
+          }
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:]|oo{.&[10:]}|aoo[10:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[5:,10:,20:, 10:5,20:10]
+                | Since{Min&index[0]}
+              )
+            & Since[21:,125:,250:]
+          )
+        | (
+            <> Volatility[60:]
+            | Volatility[20:]
+            & (
+                | Drawdown[20:]
+                | Since{Max & index[0,20]}
+                | Drawup[1:, 20:10]
+              )
+            & Since[21:,125:,250:]
+          )
+      )
+    |
+        <>Return{pure&~dd} & VP[10:,20:]
+        | FracRec[21:,125:,250:]
+    |
+        <>AssetEnc{InUni}
+    |
+        Time{long | short}
+    '''
+    
+    TryItHalfYear = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|aoo|doo|doc|daoc|vp1dd)
+            & index[0,1,2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo|vp1dd)
+            & [5:,10:,15:,10:5,15:10,20:15,15:5,20:10,20:5]
+          }
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:]|oo{.&[10:]}|aoo[10:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[5:,10:,20:, 10:5,20:10]
+                | Since{Min&index[0]}
+              )
+            & Since[21:,62:,125:]
+          )
+        | (
+            <> Volatility[60:]
+            | Volatility[20:]
+            & (
+                | Drawdown[20:]
+                | Since{Max & index[0,20]}
+                | Drawup[1:, 20:10]
+              )
+            & Since[21:,62:,125:]
+          )
+      )
+    |
+        <>Return{pure&~dd} & VP[10:,20:]
+        | FracRec[21:,62:,125:]
+    |
+        <>AssetEnc{InUni}
+    |
+        Time{long | short}
+    '''
+    
+    TryMoreStandard = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|aoo|doo|doc|daoc|vp1dd)
+            & index[0,1,2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo|vp1dd)
+            & [5:,10:,15:,10:5,15:10,20:15,15:5,20:10,20:5]
+          }
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:]|oo{.&[10:]}|aoo[10:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[5:,10:,20:, 10:5,20:10]
+                | Since{Min&index[0]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    |
+        <>Return{pure&~dd} & VP[10:,20:]
+        | FracRec[21:,62:,125:,250:]
     |
         <>AssetEnc{InUni}
     |
