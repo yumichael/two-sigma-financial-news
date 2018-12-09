@@ -293,3 +293,40 @@ class TP(O()):
       }
     | Corr{Uni}
     '''
+    
+    IKGPair = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc)
+            & index[0]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [5:,10:,15:,10:5,15:10,20:15,15:5,20:10,20:5]
+          }
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[1:, 5:,10:]
+                | Since{Max&index[0]}
+                | Since{Min&index[0,10]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    |
+        <>AssetEnc{InUni}
+        | AssetEnc{Code}
+    |
+        <>FaceValue{Volume}
+        | Return{mix[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19]}
+        | Return{rr|af|it}
+#<># 0 #<># 0 #<>#
+    <>0
+    | Corr & Corr{
+        <>[21,62,125,250]
+        & ay[1,10]
+      }
+    | Corr{Uni}
+    '''
