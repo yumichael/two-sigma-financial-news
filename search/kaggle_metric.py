@@ -33,7 +33,7 @@ class KaggleMetric():
         # Here we take advantage of the fact that `labels` (used to calculate `x_t`)
         # is a pd.Series and call `group_by`
         x_t_sum = x_t.groupby(df_time).sum()
-        var = x_t_sum.var() # std to var is #NEW
+        var = x_t_sum.var(ddof=0) # std to var is #NEW
         mean = x_t_sum.mean() #NEW
         score = mean / np.sqrt(var) if var != 0 else mean
 
