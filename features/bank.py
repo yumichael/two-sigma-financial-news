@@ -69,7 +69,7 @@ class TP(O()):
         Time{long|short}
     '''
     
-    InitKaggleGo = '''
+    IKGCover = '''
     <>~Market & (
         <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
             <>(oo|cc|aoo|acc|daoc)
