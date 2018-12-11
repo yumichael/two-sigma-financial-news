@@ -160,6 +160,144 @@ class TP(O()):
         | Return{rr|af|it}
     '''
     
+    IKGCoverThreeVP1 = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc|vp1dd)
+            & index[0]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo|vp1dd)
+            & [3:,6:,9:,12:,15:,18:,6:3,9:6,12:9,15:12,18:15,21:18,9:3,12:6,\
+            15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
+          }
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:]|vp1dd)}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[1:, 5:,10:]
+                | Since{Max&index[0]}
+                | Since{Min&index[0,10]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    |
+        <>AssetEnc{InUni}
+        | AssetEnc{Code}
+    |
+        <>FaceValue{Volume}
+        | Return{mix[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19]}
+        | Return{rr|af|it}
+    '''
+    
+    IKGCoverThreeNoShort = '''
+    <>~Market & (
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [3:,6:,9:,12:,15:,18:,6:3,9:6,12:9,15:12,18:15,21:18,9:3,12:6,\
+            15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
+          }
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[1:, 5:,10:]
+                | Since{Max&index[0]}
+                | Since{Min&index[0,10]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    |
+        <>AssetEnc{InUni}
+        | AssetEnc{Code}
+    |
+        <>FaceValue{Volume}
+        | Return{mix[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19]}
+        | Return{rr|af|it}
+    '''
+    
+    IKGCoverThreeMoreShort = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc)
+            & index[0,1,2,0:1,1:2,0:2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [3:,6:,9:,12:,15:,18:,6:3,9:6,12:9,15:12,18:15,21:18,9:3,12:6,\
+            15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
+          }
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[1:, 5:,10:]
+                | Since{Max&index[0]}
+                | Since{Min&index[0,10]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    |
+        <>AssetEnc{InUni}
+        | AssetEnc{Code}
+    |
+        <>FaceValue{Volume}
+        | Return{mix[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19]}
+        | Return{rr|af|it}
+    '''
+    
+    IKGCoverThreeHomo = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc)
+            & index[0]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [3:,6:,9:,12:,15:,18:,6:3,9:6,12:9,15:12,18:15,21:18,9:3,12:6,\
+            15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
+          }
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[1:, 5:,10:]
+                | Since{Max&index[0]}
+                | Since{Min&index[0,10]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    |
+        <>FaceValue{Volume}
+        | Return{mix[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19]}
+        | Return{rr|af|it}
+    '''
+    
+    IKGCoverThreeNoDraw = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc)
+            & index[0]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [3:,6:,9:,12:,15:,18:,6:3,9:6,12:9,15:12,18:15,21:18,9:3,12:6,\
+            15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
+          }
+      )
+    |
+        <>AssetEnc{InUni}
+        | AssetEnc{Code}
+    |
+        <>FaceValue{Volume}
+        | Return{mix[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19]}
+        | Return{rr|af|it}
+    '''
+    
     IKGCoverVolatility = '''
     <>~Market & (
         <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
@@ -603,3 +741,6 @@ class TP(O()):
       }
     | Corr{Uni}
     '''
+    
+for name in TP:
+    TP[name] = f'<{name}>'+TP[name]
