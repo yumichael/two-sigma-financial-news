@@ -741,3 +741,6 @@ class TP(O()):
       }
     | Corr{Uni}
     '''
+    
+for name in TP:
+    TP[name] = f'<{name}>'+TP[name]
