@@ -53,3 +53,7 @@ class FDP(O()):
             load = False #frzset
             save = False #sorted
             keep = False #load
+            
+        @IDSSH.pickle
+        class Answers(O()):
+            '''a list (per kfold) of list ([0] is cv, rest are holdout) of the dataframes of the actual prediction results'''
