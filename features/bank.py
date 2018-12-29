@@ -996,6 +996,8 @@ class TP(O()):
         Time{long | short}
     '''
     
+    ikg = '''IKG'''
+    
     ############################################# uh other stuff below like pairs #################################################
     
     
@@ -1353,7 +1355,7 @@ class TP(O()):
 ############################################# MIXED GUYS #####################################################
 _tp = f'Return{{oo|cc|aoo|acc|doc|daoc|vp1dd}}&({TP.Five}|{TP.Short})'
 TP.PairFiveShortVP1_1_0_0_NoCorr = ''.join(f'0|{_tp*i}#<>#' for i in [1,0,0])+'0'
-#TP.PairFiveShortVP1_1_0_0_NoCorr = ''.join(f'0|{_tp*i}#<>#' for i in [1,0,0])+'Corr{.&'
+TP.PairFiveShortVP1_1_0_0_MidCorr = ''.join(f'0|{_tp*i}#<>#' for i in [1,0,0])+'Corr{.&[21,62]}|Unic{.&[21,62]}'
     
     
     
