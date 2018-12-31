@@ -17,6 +17,10 @@ class TP(O()):
             15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
           }
         | (
+            Return{oo|aoo|doo|vp1dd|vp5dd|Volatility}
+            & MeanDiff{.&[5:10,5:20,10:20,20:60,3:6,3:9,6:12,9:18]}
+          )
+        | (
             <>Return{(oo{.&[1:]}|aoo[1:]|doo[1:]|oo{.&[10:]}|aoo[10:]|doo[10:])}
             & (
                 <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
@@ -50,6 +54,7 @@ class TP(O()):
             & Since[21:,62:,125:,250:]
           )
       )
+    | Market{.&Avail{ . | dd | [ 1:5, 5:20, 10:60 ]}}
     | Market{.&
         <>(~Weight|Weight)
         & (Return|VP|Volatility)
@@ -994,6 +999,77 @@ class TP(O()):
         <>AssetEnc{InUni}
     |
         Time{long | short}
+    '''
+    
+    NewGuyPlain = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|doc)
+            & index[0,1,2, 0:1,1:2,0:2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo)
+            & [5:,10:,15:,10:5,15:10,20:15,15:5,20:10,20:5]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo)
+            & [3:,12:,6:3,9:3,12:6,12:3,18:9,15:3,18:6,18:3,21:6]
+          }
+        | (
+            Return{oo}
+            & DiffMean{.&[5:10,5:20,10:20,20:60,3:6,3:9]}
+          )
+        | (
+            <>Return{(oo{.&[1:]}|oo{.&[10:]})}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[1:, 20:10]
+                | Since{Max&index[0]}
+                | Since{Min&index[0]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    | Market{.&Avail{ . & ~dd & ([ 0, 1:5, 10:60 ])}}
+    | Market{.&
+        <>(Weight)
+        & (Return|)
+        & [1:,10:,60:]
+      }
+    |
+        Time{short}
+    '''
+    
+    NewGuyFancy = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|doc|vp1dd)
+            & index[0,1,2, 0:1,1:2,0:2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|doo)
+            & [3:,6:,9:,12:,15:,18:,6:3,9:6,12:9,15:12,18:15,21:18,9:3,12:6,\
+            15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
+          }
+        | (
+            Return{oo|doo|vp5dd}
+            & DiffMean{.&[3:6,3:9,6:12,9:18]}
+          )
+        | (
+            <>Return{(oo{.&[1:]}|doo[1:]|oo{.&[10:]}|aoo[10:]|doo[10:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Since{Max&index[0]}
+                | Since{Min&index[0]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    | Market{.&Avail{ . & ~dd & [ 5:20 ]}}
+    |
+        | FracRec[62:]
+    |
+        Time{long|short}
     '''
     
     ikg = '''IKG'''
