@@ -88,7 +88,7 @@ class KaggleMetric():
         score = mean / np.sqrt(var) if var != 0 else mean
 
         #valid_data.i += self.incr #NEW comment out
-        return [('sharpe', score, True), ('mean', mean, True), ('var', var, False)] #NEW
+        return [('sharpe', score, True), ('mean', mean, True), ('var', var, False), ('count', len(t), False)] #NEW
     
         #return 'kaggle', score+valid_data.i, True
     
