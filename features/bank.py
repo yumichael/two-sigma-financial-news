@@ -18,7 +18,7 @@ class TP(O()):
           }
         | (
             Return{oo|aoo|doo|vp1dd|vp5dd|Volatility}
-            & MeanDiff{.&[5:10,5:20,10:20,20:60,3:6,3:9,6:12,9:18]}
+            & DiffMean{.&[5:10,5:20,10:20,20:60,3:6,3:9,6:12,9:18]}
           )
         | (
             <>Return{(oo{.&[1:]}|aoo[1:]|doo[1:]|oo{.&[10:]}|aoo[10:]|doo[10:])}
@@ -86,6 +86,14 @@ class TP(O()):
     s23 = '    <>~Market & (\n        | Return{.&pure&~index} & ~Since & Return{.&\n            <>(oo|aoo|doo|vp1dd|vp5dd)\n            & [10:,10:5,15:10,15:5,20:5]\n          }\n        | (\n            <>Return{(oo{.&[1:]})}\n            & (\n                | Drawdown[10:,20:10]\n                | Since{Max&index[20]}\n                | Since{Min&index[20]}\n              )\n            & Since[21:, 250:]\n          )\n        | (\n            <>Return{dd} & VP[ 5:, 10:]\n            & (\n                | Drawdown[1:]\n                | Since{Max & index[0]}\n                | Since{Min & index[0]}\n              )\n            & Since[21:, 250:]\n          )\n      )\n    |\n        Time{long| short}'
     s24 = '    <>~Market & (\n        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&\n            <>(oo|daoc)\n            & index[0,1,2, 0:1,0:2]\n          }\n        | Return{.&pure&~index} & ~Since & Return{.&\n            <>(oo|doo)\n            & [10:,15:,20:15,15:5,20:10,20:5]\n          }\n        | (\n            <>Return{(oo{.&[1:]}|oo{.&[10:]}|doo[10:])}\n            & (\n                | Drawdown[ 5:,20:10]\n                | Since{Min&index[0]}\n              )\n            & Since[21:]\n          )\n        | (\n            <>Return{dd} & VP[1:, 5:]\n            & (\n                | Since{Max & index[0,10]}\n                | Since{Min & index[0]}\n              )\n            & Since[21:]\n          )\n      )\n    |\n        <>AssetEnc{InUni}'
 
+    s99 = '    <>~Market & (\n        | (\n            <>Return{(oo{.&[1:]}|doo[1:]|oo{.&[10:]}|aoo[10:])}\n            & (\n                | Drawdown[ 5:, 10:5,20:10]\n                | Since{Max&index[0,10]}\n                | Since{Min&index[0,5,10]}\n              )\n            & Since[21:, 125:, 250:]\n          )\n      )\n    |\n        <>Return{pure&~dd} & VP[1:,10:]\n        | FracRec[21:,125:,250:]'
+    s98 = s99
+    s93 = '    <>~Market & (\n        | Return{.&pure&~index} & ~Since & Return{.&\n            <>(oo)\n            & [5:,10:,20:15,15:5]\n          }\n        | (\n            <>Return{(aoo[1:])}\n            & (\n                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}\n                | Drawdown[10:,20:, 10:5,20:10]\n                | Since{Max&index[5,10]}\n                | Drawup[10:]\n                | Since{Min&index[20]}\n              )\n            & Since[21:, 125:, 250:]\n          )\n        | (\n            <>Return{dd} & VP[ 10:]\n            & (\n                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}\n                | Since{Max & index[0,10]}\n                | Drawup[20:10]\n                | Since{Min & index[0]}\n              )\n            & Since[21:, 125:, 250:]\n          )\n      )'
+    s96 = '    <>~Market & (\n        | Return{.&pure&~index} & ~Since & Return{.&\n            <>(oo|aoo|vp1dd|vp5dd)\n            & [10:,15:,10:5,15:10,20:10]\n          }\n        | (\n            <>Return{(oo{.&[1:]})}\n            & (\n                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}\n                | Drawdown[10:,20:,20:10]\n                | Since{Min&index[0]}\n              )\n            & Since[ 62:, 125:]\n          )\n        | (\n            | Volatility[ 20:]\n            & (\n                <>Drawdown[1:, 10:5]\n                | Since{Max & index[5]}\n                | Since{Min & index[20]}\n              )\n            & Since[ 125:]\n          )\n      )\n    |\n        <>Return{pure&~dd} & VP[10:]\n        | FracRec[21:]'
+    s97 = '    <>~Market & (\n        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&\n            <>(cc|doo|doc|vp1dd)\n            & index[0,1,2,1:2]\n          }\n        | Return{.&pure&~index} & ~Since & Return{.&\n            <>(oo|aoo|Volatility)\n            & [10:,15:,10:5,15:10,15:5,20:10]\n          }\n        | (\n            <>Return{(oo{.&[1:]}|oo{.&[10:]})}\n            & (\n                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}\n                | Drawdown[10:, 10:5,20:10]\n                | Drawup[20:10]\n                | Since{Min&index[0,10,20]}\n              )\n            & Since[21:, 62:, 250:]\n          )\n      )\n    | Market{.&\n        <>( Weight)\n        & (Return| VP)\n        & [1:,5:,10:]\n      }\n    |\n        <>AssetEnc{InUni}\n        | AssetEnc{Code}'
+    s92 = '    <>~Market & (\n        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&\n            <>(daoc|vp1dd)\n            & index[0,1:2,0:2]\n          }\n        | Return{.&pure&~index} & ~Since & Return{.&\n            <>(oo|aoo|vp1dd)\n            & [6:,9:,12:,15:,12:9,18:12,15:6,15:3,18:6,21:9]\n          }\n        | (\n            <>Return{(oo{.&[10:]})}\n            & (\n                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}\n                | Drawdown[1:, 5:,20:,20:10]\n                | Since{Min&index[20]}\n              )\n            & Since[21:, 62:, 125:, 250:]\n          )\n      )\n    |\n        | FracRec[21:,62:,125:,250:]\n    |\n        Time{long| short}'
+    s88 = '    <>~Market & (\n        | Return{.&pure&~index} & ~Since & Return{.&\n            <>(aoo|vp1dd|vp5dd)\n            & [5:,10:,15:10,15:5,20:10]\n          }\n        | (\n            <>Return{(oo{.&[1:]}|doo[10:])}\n            & (\n                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}\n                | Drawdown[20:10]\n                | Since{Min&index[0,5]}\n              )\n            & Since[ 125:, 250:]\n          )\n        | (\n            <>Return{dd} & VP[1:, 10:]\n            & (\n                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}\n                | Drawdown[1:, 5:,20:,20:10]\n                | Since{Max & index[0,10]}\n                | Drawup[20:10]\n                | Since{Min & index[0]}\n              )\n            & Since[ 125:, 250:]\n          )\n      )\n    | Market{.&\n        <>(~Weight)\n        & ( Volatility)\n        & [1:]\n      }\n    |\n        Time{long}'
+    s25 = '    <>~Market & (\n        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&\n            <>(oo|doc|daoc|vp1dd)\n            & index[0,1,2,1:2,0:2]\n          }\n        | (\n            <>Return{(oo{.&[1:]}|doo[1:]|oo{.&[10:]})}\n            & (\n                | Drawdown[1:,20:]\n                | Since{Max&index[0,20]}\n                | Since{Min&index[0]}\n              )\n            & Since[21:, 62:, 125:]\n          )\n        | (\n            <>Return{dd} & VP[ 5:]\n            & (\n                | Drawdown[20:10]\n                | Since{Max & index[0,20]}\n                | Drawup[1,10:,20:10]\n                | Since{Min & index[5,20]}\n              )\n            & Since[ 62:, 125:]\n          )\n      )\n    | Market{.&\n        <>( Weight)\n        & (Return)\n        & [20:]\n      }'
     ################################################ END s<number> guys #############################################################
     
     IKGCover = '''
@@ -679,6 +687,30 @@ class TP(O()):
         <>AssetEnc{RandMap[2,3]}
     '''
     
+    IKGHomoThreeMoreShort = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc)
+            & index[0,1,2,0:1,1:2,0:2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [3:,6:,9:,12:,15:,18:,6:3,9:6,12:9,15:12,18:15,21:18,9:3,12:6,\
+            15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
+          }
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[1:, 5:,10:]
+                | Since{Max&index[0]}
+                | Since{Min&index[0,10]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    '''
+    
     IKGHomoThree = '''
     <>~Market & (
         <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
@@ -1070,6 +1102,130 @@ class TP(O()):
         | FracRec[62:]
     |
         Time{long|short}
+    '''
+    
+    IKGNewThree = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc)
+            & index[0]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [3:,6:,9:,12:,15:,18:,6:3,9:6,12:9,15:12,18:15,21:18,9:3,12:6,\
+            15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
+          }
+        | (
+            Return{oo|aoo}
+            & DiffMean{.&[3:6,3:9,6:12,9:18]}
+          )
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[1:, 5:,10:]
+                | Since{Max&index[0]}
+                | Since{Min&index[0,10]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    '''
+    
+    IKGNewThreeMoreShort = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc)
+            & index[0,1,2,0:1,1:2,0:2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [3:,6:,9:,12:,15:,18:,6:3,9:6,12:9,15:12,18:15,21:18,9:3,12:6,\
+            15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
+          }
+        | (
+            Return{oo|aoo}
+            & DiffMean{.&[3:6,3:9,6:12,9:18]}
+          )
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[1:, 5:,10:]
+                | Since{Max&index[0]}
+                | Since{Min&index[0,10]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    '''
+    
+    IKGGGThreeMoreShort = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc)
+            & index[0,1,2,0:1,1:2,0:2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [3:,6:,9:,12:,15:,18:,6:3,9:6,12:9,15:12,18:15,21:18,9:3,12:6,\
+            15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
+          }
+        | (
+            Return{oo|aoo}
+            & DiffMean{.&[3:6,3:9,6:12,9:18]}
+          )
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[1:, 5:,10:]
+                | Since{Max&index[0]}
+                | Since{Min&index[0,10]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    | Market{.&Avail{ . & ~dd & ([ 0, 10:60 ])}}
+    | Market{.&
+        <>(~Weight)
+        & (Return|Volatility)
+        & [10:]
+      }
+    '''
+    
+    IKGGGlobalThreeMoreShort = '''
+    <>~Market & (
+        <>Return{.&pure&~digit&~TEN} & ~Since & Return{.&
+            <>(oo|cc|aoo|acc|daoc)
+            & index[0,1,2,0:1,1:2,0:2]
+          }
+        | Return{.&pure&~index} & ~Since & Return{.&
+            <>(oo|aoo)
+            & [3:,6:,9:,12:,15:,18:,6:3,9:6,12:9,15:12,18:15,21:18,9:3,12:6,\
+            15:9,18:12,21:15,12:3,15:6,18:9,21:12,15:3,18:6,21:9,18:3,21:6,21:3]
+          }
+        | (
+            Return{oo|aoo}
+            & DiffMean{.&[3:6,3:9,6:12,9:18]}
+          )
+        | (
+            <>Return{(oo{.&[1:]}|aoo[1:])}
+            & (
+                <> ~Drawdown&~Drawup&~Since{Min}&~Since{Max}
+                | Drawdown[1:, 5:,10:]
+                | Since{Max&index[0]}
+                | Since{Min&index[0,10]}
+              )
+            & Since[21:,62:,125:,250:]
+          )
+      )
+    | Market{.&Avail{ . & ~dd & ([ 0, 10:60 ])}}
+    | Market{.&
+        <>(~Weight)
+        & (Return|Volatility)
+        & [10:,60:]
+      }
     '''
     
     ikg = '''IKG'''
